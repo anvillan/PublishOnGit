@@ -32,23 +32,23 @@ jobs:
         run: dotnet build --configuration ${{ env.CONFIGURATION }}
         
       # Publish
-      - name: 'publish ${{ env.AZURE_WEBAPP_NAME }}'
-        run: dotnet publish -c ${{ env.CONFIGURATION }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}'
+      - name: publish ${{ env.AZURE_WEBAPP_NAME }}
+        run: dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}
         
-      - name: 'publish ${{ env.AZURE_FUNCTIONAPP_NAME }}'
-        run: dotnet publish -c ${{ env.CONFIGURATION }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}'
+      - name: publish ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        run: dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}
 
       # Deploy to Azure
-      - name: 'deploy ${{ env.AZURE_WEBAPP_NAME }}'
+      - name: deploy ${{ env.AZURE_WEBAPP_NAME }}
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AVCPORTALWEBAPPWIN_PUBLISH_PROFILE }}
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}'
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}
       
-      - name: 'deploy ${{ env.AZURE_FUNCTIONAPP_NAME }}'
+      - name: deploy ${{ env.AZURE_FUNCTIONAPP_NAME }}
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           publish-profile: ${{ secrets.AVCPORTALFUNCTIONAPPWINCON_PUBLISH_PROFILE }}
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}'
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}
