@@ -9,7 +9,9 @@ on:
 env:
   AZURE_WEBAPP_NAME: 'avcPortalWebAppWin'
   AZURE_FUNCTIONAPP_NAME: 'avcPortalFunctionAppWinCon'
-  PACKAGE_PATH: 'dist'
+  AZURE_WEBAPP_SRC_DIR: 'src/WebAppPublishOnGit'
+  AZURE_FUNCTIONAPP_SRC_DIR: 'src/FunctionAppPublishOnGit'
+  PACKAGE_PATH: 'dist' 
   DOTNET_VERSION: '3.1.101'
   CONFIGURATION: 'Release'
 
@@ -33,10 +35,14 @@ jobs:
         
       # Publish
       - name: 'publish ${{ env.AZURE_WEBAPP_NAME }}'
-        run: dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}
+        run: |
+          cd ${{ env.AZURE_WEBAPP_SRC_DIR }}
+          dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}
         
       - name: 'publish ${{ env.AZURE_FUNCTIONAPP_NAME }}'
-        run: dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}
+        run: |
+          cd ${{ env.AZURE_FUNCTIONAPP_SRC_DIR }}
+          dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}
 
       # Deploy to Azure
       - name: 'deploy ${{ env.AZURE_WEBAPP_NAME }}'
