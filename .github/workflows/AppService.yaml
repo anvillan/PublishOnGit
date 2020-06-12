@@ -32,5 +32,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: WebApplication220200611233303
-        publish_profile: ${{ secrets.WEBAPPLICATION220200611233303_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.WEBAPPLICATION220200611233303_PUBLISH_PROFILE }}
         package: dist\WebApplication220200611233303
