@@ -1,4 +1,4 @@
-name: Deploy ASP.NET Core app to Azure Web App
+name: Deploy ASP.NET Core solution to Azure
 
 on:
   push:
@@ -7,10 +7,13 @@ on:
     branches: [ master ]
     
 env:
-  AZURE_WEBAPP_NAME: avcPortalWebAppWin
-  AZURE_WEBAPP_PACKAGE_PATH: 'dist'
+  AZURE_WEBAPP_NAME: 'avcPortalWebAppWin'
+  AZURE_FUNCTIONAPP_NAME: 'avcPortalFunctionAppWinCon'
+  AZURE_WEBAPP_SRC_DIR: 'src/WebAppPublishOnGit'
+  AZURE_FUNCTIONAPP_SRC_DIR: 'src/FunctionAppPublishOnGit'
+  PACKAGE_PATH: 'dist' 
   DOTNET_VERSION: '3.1.101'
-  CONFIGURATION: Release
+  CONFIGURATION: 'Release'
 
 jobs:
   build-and-deploy:
@@ -26,16 +29,32 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }} 
       
-      # Run dotnet build and publish
-      - name: dotnet build and publish
+      # Build
+      - name: DotNet build
+        run: dotnet build --configuration ${{ env.CONFIGURATION }}
+        
+      # Publish
+      - name: 'publish ${{ env.AZURE_WEBAPP_NAME }}'
         run: |
-          dotnet build --configuration ${{ env.CONFIGURATION }}
-          dotnet publish -c ${{ env.CONFIGURATION }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}' 
-          
-      # Deploy to Azure Web apps
-      - name: 'Run Azure webapp deploy action using publish profile credentials'
+          cd ${{ env.AZURE_WEBAPP_SRC_DIR }}
+          dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}
+        
+      - name: 'publish ${{ env.AZURE_FUNCTIONAPP_NAME }}'
+        run: |
+          cd ${{ env.AZURE_FUNCTIONAPP_SRC_DIR }}
+          dotnet publish -c ${{ env.CONFIGURATION }} -o ${{ env.PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}
+
+      # Deploy to Azure
+      - name: 'deploy ${{ env.AZURE_WEBAPP_NAME }}'
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AVCPORTALWEBAPPWIN_PUBLISH_PROFILE }}
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+          package: ${{ env.PACKAGE_PATH }}/${{ env.AZURE_WEBAPP_NAME }}
+      
+      - name: 'deploy ${{ env.AZURE_FUNCTIONAPP_NAME }}'
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          publish-profile: ${{ secrets.AVCPORTALFUNCTIONAPPWINCON_PUBLISH_PROFILE }}
+          package: ${{ env.PACKAGE_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}
