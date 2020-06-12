@@ -25,12 +25,12 @@ jobs:
         dotnet-version: 3.1.101
     - name: dotnet build and publish
       run: >-
-        dotnet build --configuration Release --output dist\WebApplication220200611233303
+        dotnet build --configuration Release --output dist
 
-        dotnet publish --configuration Release --output dist\WebApplication220200611233303
+        dotnet publish --configuration Release --output dist
     - name: Deploy web app to Azure
       uses: azure/webapps-deploy@v2
       with:
         app-name: WebApplication220200611233303
         publish-profile: ${{ secrets.WEBAPPLICATION220200611233303_PUBLISH_PROFILE }}
-        package: dist\WebApplication220200611233303
+        package: dist
