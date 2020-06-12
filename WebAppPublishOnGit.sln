@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30015.26
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppPublishOnGit", "src\WebAppPublishOnGit\WebAppPublishOnGit.csproj", "{1861CF3B-FC00-41F7-A79C-EFF21A9D32BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionAppPublishOnGit", "src\FunctionAppPublishOnGit\FunctionAppPublishOnGit.csproj", "{E140598F-4A1B-4865-9C6E-72C925B1B12D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{1861CF3B-FC00-41F7-A79C-EFF21A9D32BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1861CF3B-FC00-41F7-A79C-EFF21A9D32BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1861CF3B-FC00-41F7-A79C-EFF21A9D32BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E140598F-4A1B-4865-9C6E-72C925B1B12D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E140598F-4A1B-4865-9C6E-72C925B1B12D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E140598F-4A1B-4865-9C6E-72C925B1B12D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E140598F-4A1B-4865-9C6E-72C925B1B12D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
