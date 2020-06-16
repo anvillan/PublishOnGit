@@ -5,11 +5,11 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="../../.github/workflows/AppService.yaml">
-			<Link>Properties/workflows/AppService.yaml</Link>				
+		<Content Include="../../.github/workflows/avcPortalWebAppProd.yaml">
+			<Link>Properties/workflows/avcPortalWebAppProd.yaml</Link>				
 		</Content>
-		<Content Include="../../.github/workflows/AppService1.yaml">
-			<Link>Properties/workflows/AppService1.yaml</Link>
+		<Content Include="../../.github/workflows/avcPortalWebAppTest.yaml">
+			<Link>Properties/workflows/avcPortalWebAppTest.yaml</Link>
 		</Content>
 	</ItemGroup>
 </Project>
