@@ -8,14 +8,14 @@ on:
     - master
 env: {}
 jobs:
-  WebApplication220200611233303-build-and-deploy:
+  avcPortalWebAppProd-build-and-deploy:
     env:
-      AzureServiceName: WebApplication220200611233303
+      AzureServiceName: avcPortalWebAppProd
       DotNetVersion: 3.1.101
       LastUsedBuildConfiguration: Release
       ProjectGuid: 1861cf3b-fc00-41f7-a79c-eff21a9d32ba
-      ResourceId: /subscriptions/07268dd7-4c50-434b-b1ff-67b8164edb41/resourceGroups/aapt0612Grop/providers/Microsoft.Web/sites/WebApplication220200611233303
-      ResourceGroup: aapt0612Grop
+      ResourceId: /subscriptions/07268dd7-4c50-434b-b1ff-67b8164edb41/resourceGroups/avcPortalGrpWin/providers/Microsoft.Web/sites/avcPortalWebAppProd
+      ResourceGroup: avcPortalGrpWin
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -31,6 +31,6 @@ jobs:
     - name: Deploy web app to Azure
       uses: azure/webapps-deploy@v2
       with:
-        app-name: WebApplication220200611233303
-        publish-profile: ${{ secrets.WEBAPPLICATION220200611233303_PUBLISH_PROFILE }}
+        app-name: avcPortalWebAppProd
+        publish-profile: ${{ secrets.AVCPORTALWEBAPPPROD_PUBLISH_PROFILE }}
         package: dist

@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+	<ItemGroup>
+		<Content Include="../../.github/workflows/AppService.yaml">
+			<Link>Properties/workflows/AppService.yaml</Link>				
+		</Content>
+	</ItemGroup>
 </Project>
