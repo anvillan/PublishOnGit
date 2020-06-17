@@ -29,8 +29,8 @@ jobs:
 
         dotnet publish --configuration Release --output dist
     - name: Deploy web app to Azure
-      uses: azure/functions-action@v1
+      uses: azure/webapps-deploy@v2
       with:
         app_name: avcPortalWebAppTest
-        publish_profile: ${{ secrets.AVCPORTALWEBAPPTEST_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.AVCPORTALWEBAPPTEST_PUBLISH_PROFILE }}
         package: dist
