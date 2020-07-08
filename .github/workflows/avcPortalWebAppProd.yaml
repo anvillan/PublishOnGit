@@ -31,7 +31,7 @@ jobs:
       - name: Run dotnet build and publish
         run: |
           dotnet build --configuration ${{ env.CONFIGURATION }}
-          dotnet publish --configuration ${{ env.CONFIGURATION }} -output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output"
+          dotnet publish --configuration ${{ env.CONFIGURATION }} --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output"
           
       - name: Run Azure Web App Action
         uses: azure/webapps-deploy@v2
