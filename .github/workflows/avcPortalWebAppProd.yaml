@@ -1,36 +1,41 @@
-name: Deplay ASP.NET app to Azure Web App
+# CONFIGURATION
+#  GitHub Action workflow template to deploy an ASP .NET Core app to Azure Web App Service (Windows)
+name: Deploy ASP.NET Core app to Web App
 on:
   pull_request:
     branches:
-    - master
+    - "*"
   push:
     branches:
     - master
-env: {}
+env:
+  AZURE_WEBAPP_NAME: avcPortalWebAppProd
+  AZURE_WEBAPP_PACKAGE_PATH: dist
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AVCPORTALWEBAPPPROD_PUBLISH_PROFILE }} 
+  CONFIGURATION: Release
+  DOTNET_VERSION: 3.1
+
 jobs:
-  avcPortalWebAppProd-build-and-deploy:
-    env:
-      AzureServiceName: avcPortalWebAppProd
-      DotNetVersion: 3.1.101
-      LastUsedBuildConfiguration: Release
-      ProjectGuid: 1861cf3b-fc00-41f7-a79c-eff21a9d32ba
-      ResourceId: /subscriptions/07268dd7-4c50-434b-b1ff-67b8164edb41/resourceGroups/avcPortalGrpWin/providers/Microsoft.Web/sites/avcPortalWebAppProd
-      ResourceGroup: avcPortalGrpWin
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-    - name: dotnet build and publish
-      run: >-
-        dotnet build --configuration Release --output dist
 
-        dotnet publish --configuration Release --output dist
-    - name: Deploy web app to Azure
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: avcPortalWebAppProd
-        publish-profile: ${{ secrets.AVCPORTALWEBAPPPROD_PUBLISH_PROFILE }}
-        package: dist
+      - name: Checkout GitHub Action
+        uses: actions/checkout@master
+      
+      - name: Setup .NET Core SDK ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+      - name: Run dotnet build and publish
+        run: |
+          dotnet build --configuration ${{ env.CONFIGURATION }}
+          dotnet publish --configuration ${{ env.CONFIGURATION }} --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output"
+          
+      - name: Run Azure Web App Action
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output"
