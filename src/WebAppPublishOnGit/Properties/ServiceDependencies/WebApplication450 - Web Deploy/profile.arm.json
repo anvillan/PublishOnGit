@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "Anc21MVCNet461IndAuth20200804032335",
+      "defaultValue": "WebApplication450",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
