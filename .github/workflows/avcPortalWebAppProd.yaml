@@ -1,0 +1,44 @@
+name: Deploy ASP.NET Core Web Application to avcPortalWebAppProd
+on:
+  pull_request:
+    branches:
+    - '*'
+  push:
+    branches:
+    - master
+env:
+  AZURE_WEBAPP_NAME: avcPortalWebAppProd
+  AZURE_WEBAPP_PACKAGE_PATH: ./published
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AVCPORTALWEBAPPPROD_PUBLISH_PROFILE }}
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 3.1.x
+  PUBLISH_PROVIDERTYPE: azureAppService
+  PUBLISH_RESOURCEID: /subscriptions/07268dd7-4c50-434b-b1ff-67b8164edb41/resourceGroups/avcPortalResourceGrp/providers/Microsoft.Web/sites/avcPortalWebAppProd
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{ env.DOTNET_CORE_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore packages
+      run: dotnet restore
+    - name: Build app
+      run: dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test app
+      run: dotnet test --no-build
+    - name: Publish app for deploy
+      run: dotnet publish --configuration ${{ env.CONFIGURATION }} --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
