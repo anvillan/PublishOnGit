@@ -1,14 +1,19 @@
-name: Deploy ASP.NET Core Web Application to WebApplication120200825110431
+name: Deploy ASP.NET Core Web Application to avcVSAppServiceLinux
 on:
+  pull_request:
+    branches:
+    - '*'
   push:
     branches:
-    - PublishOnGit
+    - master
 env:
-  AZURE_WEBAPP_NAME: WebApplication120200825110431
+  AZURE_WEBAPP_NAME: avcVSAppServiceLinux
   AZURE_WEBAPP_PACKAGE_PATH: ./published
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.WEBAPPLICATION120200825110431_PUBLISH_PROFILE }}
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AVCVSAPPSERVICELINUX_PUBLISH_PROFILE }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 3.1.x
+  PUBLISH_PROVIDERTYPE: azureAppService
+  PUBLISH_RESOURCEID: /subscriptions/07268dd7-4c50-434b-b1ff-67b8164edb41/resourceGroups/avcVSResourceGrpLinux/providers/Microsoft.Web/sites/avcVSAppServiceLinux
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,7 +30,7 @@ jobs:
     - name: Test app
       run: dotnet test --no-build
     - name: Publish app for deploy
-      run: dotnet publish --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      run: dotnet publish --configuration ${{ env.CONFIGURATION }} --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
