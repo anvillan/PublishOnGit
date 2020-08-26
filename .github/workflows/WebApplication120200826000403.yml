@@ -1,12 +1,12 @@
-name: Deploy ASP.NET Core Web Application to WebApplication320200825102702
+name: Deploy ASP.NET Core Web Application to WebApplication120200826000403
 on:
   push:
     branches:
-    - PublishOnGit
+    - master
 env:
-  AZURE_WEBAPP_NAME: WebApplication320200825102702
+  AZURE_WEBAPP_NAME: WebApplication120200826000403
   AZURE_WEBAPP_PACKAGE_PATH: ./published
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.WEBAPPLICATION320200825102702_PUBLISH_PROFILE }}
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.WEBAPPLICATION120200826000403_PUBLISH_PROFILE }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 3.1.x
 jobs:
