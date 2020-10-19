@@ -1,12 +1,12 @@
-name: Deploy ASP.NET Core Web Application to WebApplication920201014071333
+name: Deploy ASP.NET Core Web Application to WebApplication520201019071928
 on:
   push:
     branches:
     - master
 env:
-  AZURE_WEBAPP_NAME: WebApplication920201014071333
+  AZURE_WEBAPP_NAME: WebApplication520201019071928
   AZURE_WEBAPP_PACKAGE_PATH: ./published
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.WEBAPPLICATION920201014071333_PUBLISH_PROFILE }}
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.WEBAPPLICATION520201019071928_PUBLISH_PROFILE }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 3.1.x
   PROJECT_PATH: src\WebAppPublishOnGit
@@ -27,7 +27,7 @@ jobs:
       run: dotnet test "${{ env.PROJECT_PATH }}" --no-build
     - name: Publish app for deploy
       run: dotnet publish "${{ env.PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
-    - name: Deploy to Azure Web App
+    - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
