@@ -1,4 +1,4 @@
-name: Deploy ASP.NET Core Web Application to WebApplication720201207221938
+name: Deploy NET Core Web Application to WebApplication720201207221938
 on:
   push:
     branches:
