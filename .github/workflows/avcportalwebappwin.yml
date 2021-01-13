@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core app to Windows WebApp avcportalwebappwin
+name: Build and deploy .NET Core app to Windows WebApp avcportalwebappwin slot
 on:
   push:
     branches:
