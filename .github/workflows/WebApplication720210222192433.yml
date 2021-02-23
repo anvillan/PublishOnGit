@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core app to Windows WebApp WebApplication720210222192433
+name: Build and Deploy .NET Core app to Windows WebApp WebApplication720210222192433
 on:
   push:
     branches:
