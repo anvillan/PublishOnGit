@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core app to Windows WebApp Project420210624011247
+name: Update the name
 on:
   push:
     branches:
